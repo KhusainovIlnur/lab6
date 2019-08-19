@@ -3,8 +3,10 @@ package com.company;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.management.Attribute;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -58,7 +60,7 @@ public class DomTester {
 //        dbf.setNamespaceAware(false); // не поддерживать пространства имен
         // dbf.setValidating(true) - DTD проверка
         //dbf.setCoalescing(true) - склеивать CDATA с ближайшим текстовым блоком
-//         dbf.setSchema( );// XML-схема или альтернативные вариантыи
+//         dbf.setSchema();// XML-схема или альтернативные вариантыи
 //        dbf.setIgnoringElementContentWhitespace(true);
         // XML -поток - источник данных схемы
 //        Source schemaSrc = new StreamSource(schemaName);
@@ -111,17 +113,31 @@ public class DomTester {
             System.out.println("Считываемем документ =====================================");
             Document doc = readXmlToDOMDocument();
             //    if (true) return;
-            System.out.println("Изменяем документ =====================================");
-            changeDocumentDemo(doc);
-            System.out.println("Рекурсивно просматриваем документ =====================================");
-            //    viewDocument(doc);
+//            System.out.println("Изменяем документ =====================================");
+//            changeDocumentDemo(doc);
+//            System.out.println("Рекурсивно просматриваем документ =====================================");
+//                viewDocument(doc);
+            findRectAndCircle(doc);
             System.out.println("Сохраняем и печатаем документ =====================================");
             saveDemo(doc);
-            System.out.println("Тестируем XPath-выражения =====================================");
-            xpathDemo(doc);
+//            System.out.println("Тестируем XPath-выражения =====================================");
+//            xpathDemo(doc);
 
         } catch (Exception ex) {
             Logger.getLogger(DomTester.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void findRectAndCircle(Document doc) {
+        Element root = doc.getDocumentElement();
+        NodeList rectElements = root.getElementsByTagName("rect");
+        NodeList circleElements = root.getElementsByTagName("ellipse");
+
+        int min = 0, max = 255;
+
+        for (int i = 0; i < rectElements.getLength(); i++) {
+            String randColor = String.format("%d, %d, %d", (int)((Math.random()*((max-min)+1))+min), (int)((Math.random()*((max-min)+1))+min), (int)((Math.random()*((max-min)+1))+min));
+            ((Element)rectElements.item(i)).setAttribute("style", "fill: rgb(" + randColor + ");");
         }
     }
 

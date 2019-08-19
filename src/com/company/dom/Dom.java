@@ -18,9 +18,10 @@ public class Dom {
 
     public static void main(String[] args) {
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newDefaultInstance();
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse("src\\com\\company\\dom\\employees.xml");
+//            Document document = builder.parse("E:\\NEW\\Java\\Дататех\\LABs\\Lab6\\__FILES_FOR_LABS\\demo.svg");
 
             NodeList employeeElements = document.getDocumentElement().getElementsByTagName("employee");
 
